@@ -1,2 +1,2 @@
 # The Edu-Venture
-A project made by dhruv, raxeet and het.
+A project made by dhruv, raxeet and het. Work in progress........
