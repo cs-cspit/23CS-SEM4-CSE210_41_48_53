@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         'faculty_home': (context) => const FacultyHome(),
         'student_profile': (context) => const StudentProfile(),
         'faculty_profile': (context) => const FacultyProfile(),
-      }, /////////////////////////////////
+      }, 
     );
   }
 }
