@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'The Edu Venture',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const SplashScreen(), // Splash screen 
+      home: const SplashScreen(),
       routes: {
         'login': (context) => const MyLogin(),
         'register': (context) => const MyRegister(),
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         'faculty_home': (context) => const FacultyHome(),
         'student_profile': (context) => const StudentProfile(),
         'faculty_profile': (context) => const FacultyProfile(),
-      }, 
+      },
     );
   }
 }
