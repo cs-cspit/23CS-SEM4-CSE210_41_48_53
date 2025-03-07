@@ -22,13 +22,11 @@ class SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 1),
       vsync: this,
     )..forward();
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-    _shakeAnimation = Tween<double>(begin: 0, end: 10)
-        .chain(CurveTween(curve: Curves.elasticIn))
-        .animate(_controller);
+    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _shakeAnimation = Tween<double>(
+      begin: 0,
+      end: 10,
+    ).chain(CurveTween(curve: Curves.elasticIn)).animate(_controller);
 
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
@@ -64,8 +62,8 @@ class SplashScreenState extends State<SplashScreen>
                 },
                 child: Image.asset(
                   'assets/logo1.png', // Ensure this image exists in your assets folder
-                  width: 250,
-                  height: 250,
+                  width: 350,
+                  height: 350,
                   errorBuilder: (context, error, stackTrace) {
                     return const Text(
                       'Image Not Found',
