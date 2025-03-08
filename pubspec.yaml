@@ -27,17 +27,37 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+# dependencies:
+#   flutter:
+#     sdk: flutter
+#   image_picker: ^1.1.2
+#   firebase_core: ^3.12.1
+#   firebase_auth: ^5.5.1
+#   google_sign_in: ^6.1.0
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^1.1.2
+  # image_picker: ^1.0.4
+  # firebase_core: ^2.15.1
+  # firebase_auth: ^4.7.3
+  # google_sign_in: ^6.1.4
+  # carousel_slider: ^5.0.0
+
+  
+  # # The following adds the Cupertino Icons font to your application.
+  # # Use with the CupertinoIcons class for iOS style icons.
+  # cupertino_icons: ^1.0.2
+
+  image_picker: ^1.0.4
   firebase_core: ^3.12.1
   firebase_auth: ^5.5.1
-  google_sign_in: ^6.1.0
+  google_sign_in: ^6.1.4
+  carousel_slider: ^5.0.0
+  cupertino_icons: ^1.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+ 
 
 dev_dependencies:
   flutter_test:
