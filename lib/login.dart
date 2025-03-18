@@ -600,6 +600,453 @@ library;
 //   }
 // }
 
+// import 'package:flutter/material.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_fonts/google_fonts.dart';
+
+// class MyLogin extends StatefulWidget {
+//   const MyLogin({super.key});
+
+//   @override
+//   MyLoginState createState() => MyLoginState();
+// }
+
+// class MyLoginState extends State<MyLogin> {
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   bool _obscurePassword = true;
+//   bool _isLoading = false;
+
+//   @override
+//   void dispose() {
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     super.dispose();
+//   }
+
+//   void _signIn() {
+//     setState(() => _isLoading = true);
+
+//     // Simulate network delay
+//     Future.delayed(const Duration(seconds: 1), () {
+//       String email = _emailController.text.trim();
+
+//       setState(() => _isLoading = false);
+
+//       if (email.endsWith('.edu.in')) {
+//         Navigator.pushNamed(context, 'student_home');
+//       } else if (email.endsWith('.ac.in')) {
+//         Navigator.pushNamed(context, 'faculty_home');
+//       } else {
+//         _showErrorSnackbar(
+//           'Invalid email domain. Please use .edu.in or .ac.in',
+//         );
+//       }
+//     });
+//   }
+
+//   Future<void> _signInWithGoogle() async {
+//     setState(() => _isLoading = true);
+
+//     try {
+//       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//       if (googleUser == null) {
+//         // The user canceled the sign-in
+//         setState(() => _isLoading = false);
+//         return;
+//       }
+
+//       final GoogleSignInAuthentication googleAuth =
+//           await googleUser.authentication;
+//       final AuthCredential credential = GoogleAuthProvider.credential(
+//         accessToken: googleAuth.accessToken,
+//         idToken: googleAuth.idToken,
+//       );
+
+//       final UserCredential userCredential = await FirebaseAuth.instance
+//           .signInWithCredential(credential);
+//       final User? user = userCredential.user;
+
+//       setState(() => _isLoading = false);
+
+//       if (user != null) {
+//         String email = user.email!;
+//         if (email.endsWith('.edu.in')) {
+//           Navigator.pushNamed(context, 'student_home');
+//         } else if (email.endsWith('.ac.in')) {
+//           Navigator.pushNamed(context, 'faculty_home');
+//         } else {
+//           _showErrorSnackbar(
+//             'Invalid email domain. Please use .edu.in or .ac.in',
+//           );
+//         }
+//       }
+//     } catch (e) {
+//       setState(() => _isLoading = false);
+//       _showErrorSnackbar('Failed to sign in with Google: $e');
+//     }
+//   }
+
+//   void _showErrorSnackbar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text(message),
+//         backgroundColor: Colors.red.shade700,
+//         behavior: SnackBarBehavior.floating,
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//         margin: const EdgeInsets.all(16),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: const Color(0xFFF5F7FA),
+//       body: Stack(
+//         children: [
+//           // Background decoration
+//           Positioned(
+//             top: -100,
+//             right: -100,
+//             child: Container(
+//               width: 300,
+//               height: 300,
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFF5A6BF5).withOpacity(0.2),
+//                 shape: BoxShape.circle,
+//               ),
+//             ),
+//           ),
+//           Positioned(
+//             bottom: -80,
+//             left: -80,
+//             child: Container(
+//               width: 200,
+//               height: 200,
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFF3498DB).withOpacity(0.15),
+//                 shape: BoxShape.circle,
+//               ),
+//             ),
+//           ),
+
+//           // Main content
+//           SafeArea(
+//             child: Center(
+//               child: SingleChildScrollView(
+//                 child: Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       // App logo
+//                       Container(
+//                         padding: const EdgeInsets.all(16),
+//                         decoration: BoxDecoration(
+//                           color: const Color(0xFF5A6BF5),
+//                           borderRadius: BorderRadius.circular(20),
+//                           boxShadow: [
+//                             BoxShadow(
+//                               color: const Color(0xFF5A6BF5).withOpacity(0.3),
+//                               blurRadius: 20,
+//                               offset: const Offset(0, 10),
+//                             ),
+//                           ],
+//                         ),
+//                         child: const Icon(
+//                           Icons.school_rounded,
+//                           size: 56,
+//                           color: Colors.white,
+//                         ),
+//                       ),
+
+//                       const SizedBox(height: 32),
+
+//                       // Welcome text
+//                       Text(
+//                         'Welcome Back',
+//                         style: GoogleFonts.poppins(
+//                           fontSize: 26,
+//                           fontWeight: FontWeight.bold,
+//                           color: const Color(0xFF2D3748),
+//                         ),
+//                       ),
+//                       const SizedBox(height: 8),
+//                       Text(
+//                         'Sign in to continue your learning journey',
+//                         style: GoogleFonts.poppins(
+//                           fontSize: 14,
+//                           color: const Color(0xFF718096),
+//                         ),
+//                         textAlign: TextAlign.center,
+//                       ),
+
+//                       const SizedBox(height: 48),
+
+//                       // Email field
+//                       _buildTextField(
+//                         controller: _emailController,
+//                         hintText: 'Email Address',
+//                         prefixIcon: Icons.email_outlined,
+//                         keyboardType: TextInputType.emailAddress,
+//                       ),
+
+//                       const SizedBox(height: 16),
+
+//                       // Password field
+//                       _buildTextField(
+//                         controller: _passwordController,
+//                         hintText: 'Password',
+//                         prefixIcon: Icons.lock_outline,
+//                         obscureText: _obscurePassword,
+//                         suffixIcon: IconButton(
+//                           icon: Icon(
+//                             _obscurePassword
+//                                 ? Icons.visibility_outlined
+//                                 : Icons.visibility_off_outlined,
+//                             color: const Color(0xFF718096),
+//                           ),
+//                           onPressed: () {
+//                             setState(() {
+//                               _obscurePassword = !_obscurePassword;
+//                             });
+//                           },
+//                         ),
+//                       ),
+
+//                       // Forgot password
+//                       Align(
+//                         alignment: Alignment.centerRight,
+//                         child: TextButton(
+//                           onPressed: () {
+//                             // Forgot password functionality
+//                           },
+//                           style: TextButton.styleFrom(
+//                             foregroundColor: const Color(0xFF5A6BF5),
+//                             padding: const EdgeInsets.symmetric(vertical: 8),
+//                           ),
+//                           child: Text(
+//                             'Forgot Password?',
+//                             style: GoogleFonts.poppins(
+//                               fontWeight: FontWeight.w500,
+//                               fontSize: 13,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+
+//                       const SizedBox(height: 24),
+
+//                       // Sign in button
+//                       _buildPrimaryButton(
+//                         onPressed: _signIn,
+//                         text: 'Sign In',
+//                         isLoading: _isLoading,
+//                       ),
+
+//                       const SizedBox(height: 24),
+
+//                       // Divider
+//                       Row(
+//                         children: [
+//                           Expanded(
+//                             child: Divider(
+//                               color: Colors.grey.shade300,
+//                               thickness: 1,
+//                             ),
+//                           ),
+//                           Padding(
+//                             padding: const EdgeInsets.symmetric(horizontal: 16),
+//                             child: Text(
+//                               'OR',
+//                               style: GoogleFonts.poppins(
+//                                 fontSize: 12,
+//                                 color: const Color(0xFF718096),
+//                                 fontWeight: FontWeight.w500,
+//                               ),
+//                             ),
+//                           ),
+//                           Expanded(
+//                             child: Divider(
+//                               color: Colors.grey.shade300,
+//                               thickness: 1,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+
+//                       const SizedBox(height: 24),
+
+//                       // Google sign-in button
+//                       _buildSocialButton(
+//                         onPressed: _signInWithGoogle,
+//                         text: 'Continue with Google',
+//                         icon: Image.asset(
+//                           'assets/google_logo.png',
+//                           height: 24,
+//                           width: 24,
+//                         ),
+//                       ),
+
+//                       const SizedBox(height: 32),
+
+//                       // Sign up option
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Text(
+//                             'Don\'t have an account?',
+//                             style: GoogleFonts.poppins(
+//                               fontSize: 14,
+//                               color: const Color(0xFF718096),
+//                             ),
+//                           ),
+//                           TextButton(
+//                             onPressed: () {
+//                               Navigator.pushNamed(context, 'register');
+//                             },
+//                             style: TextButton.styleFrom(
+//                               foregroundColor: const Color(0xFF5A6BF5),
+//                             ),
+//                             child: Text(
+//                               'Sign Up',
+//                               style: GoogleFonts.poppins(
+//                                 fontWeight: FontWeight.w600,
+//                                 fontSize: 14,
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+
+//           // Loading overlay
+//           if (_isLoading)
+//             Container(
+//               color: Colors.black.withOpacity(0.3),
+//               child: const Center(
+//                 child: CircularProgressIndicator(color: Color(0xFF5A6BF5)),
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   Widget _buildTextField({
+//     required TextEditingController controller,
+//     required String hintText,
+//     required IconData prefixIcon,
+//     TextInputType keyboardType = TextInputType.text,
+//     bool obscureText = false,
+//     Widget? suffixIcon,
+//   }) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(12),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.1),
+//             spreadRadius: 0,
+//             blurRadius: 10,
+//             offset: const Offset(0, 2),
+//           ),
+//         ],
+//       ),
+//       child: TextField(
+//         controller: controller,
+//         obscureText: obscureText,
+//         keyboardType: keyboardType,
+//         style: GoogleFonts.poppins(
+//           fontSize: 14,
+//           color: const Color(0xFF2D3748),
+//         ),
+//         decoration: InputDecoration(
+//           hintText: hintText,
+//           hintStyle: GoogleFonts.poppins(
+//             color: const Color(0xFFA0AEC0),
+//             fontSize: 14,
+//           ),
+//           prefixIcon: Icon(
+//             prefixIcon,
+//             color: const Color(0xFF718096),
+//             size: 18,
+//           ),
+//           suffixIcon: suffixIcon,
+//           border: InputBorder.none,
+//           contentPadding: const EdgeInsets.symmetric(vertical: 16),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildPrimaryButton({
+//     required VoidCallback onPressed,
+//     required String text,
+//     bool isLoading = false,
+//   }) {
+//     return SizedBox(
+//       width: double.infinity,
+//       height: 56,
+//       child: ElevatedButton(
+//         onPressed: isLoading ? null : onPressed,
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: const Color(0xFF5A6BF5),
+//           foregroundColor: Colors.white,
+//           elevation: 0,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(12),
+//           ),
+//           shadowColor: const Color(0xFF5A6BF5).withOpacity(0.5),
+//         ),
+//         child: Text(
+//           text,
+//           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildSocialButton({
+//     required VoidCallback onPressed,
+//     required String text,
+//     required Widget icon,
+//   }) {
+//     return SizedBox(
+//       width: double.infinity,
+//       height: 56,
+//       child: OutlinedButton.icon(
+//         onPressed: onPressed,
+//         icon: icon,
+//         label: Text(
+//           text,
+//           style: GoogleFonts.poppins(
+//             fontSize: 15,
+//             fontWeight: FontWeight.w500,
+//             color: const Color(0xFF2D3748),
+//           ),
+//         ),
+//         style: OutlinedButton.styleFrom(
+//           backgroundColor: Colors.white,
+//           side: BorderSide(color: Colors.grey.shade300),
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(12),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -630,6 +1077,8 @@ class MyLoginState extends State<MyLogin> {
 
     // Simulate network delay
     Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted) return;
+
       String email = _emailController.text.trim();
 
       setState(() => _isLoading = false);
@@ -668,6 +1117,8 @@ class MyLoginState extends State<MyLogin> {
           .signInWithCredential(credential);
       final User? user = userCredential.user;
 
+      if (!mounted) return;
+
       setState(() => _isLoading = false);
 
       if (user != null) {
@@ -683,6 +1134,8 @@ class MyLoginState extends State<MyLogin> {
         }
       }
     } catch (e) {
+      if (!mounted) return;
+
       setState(() => _isLoading = false);
       _showErrorSnackbar('Failed to sign in with Google: $e');
     }
@@ -714,7 +1167,7 @@ class MyLoginState extends State<MyLogin> {
               width: 300,
               height: 300,
               decoration: BoxDecoration(
-                color: const Color(0xFF5A6BF5).withOpacity(0.2),
+                color: const Color(0xFF5A6BF5).withAlpha(51), // 0.2 * 255 = 51
                 shape: BoxShape.circle,
               ),
             ),
@@ -726,7 +1179,7 @@ class MyLoginState extends State<MyLogin> {
               width: 200,
               height: 200,
               decoration: BoxDecoration(
-                color: const Color(0xFF3498DB).withOpacity(0.15),
+                color: const Color(0xFF3498DB).withAlpha(38), // 0.15 * 255 = 38
                 shape: BoxShape.circle,
               ),
             ),
@@ -750,7 +1203,9 @@ class MyLoginState extends State<MyLogin> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF5A6BF5).withOpacity(0.3),
+                              color: const Color(
+                                0xFF5A6BF5,
+                              ).withAlpha(77), // 0.3 * 255 = 77
                               blurRadius: 20,
                               offset: const Offset(0, 10),
                             ),
@@ -931,7 +1386,7 @@ class MyLoginState extends State<MyLogin> {
           // Loading overlay
           if (_isLoading)
             Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withAlpha(77), // 0.3 * 255 = 77
               child: const Center(
                 child: CircularProgressIndicator(color: Color(0xFF5A6BF5)),
               ),
@@ -955,7 +1410,7 @@ class MyLoginState extends State<MyLogin> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withAlpha(25), // 0.1 * 255 = 25
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 2),
@@ -1006,7 +1461,9 @@ class MyLoginState extends State<MyLogin> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          shadowColor: const Color(0xFF5A6BF5).withOpacity(0.5),
+          shadowColor: const Color(
+            0xFF5A6BF5,
+          ).withAlpha(128), // 0.5 * 255 = 128
         ),
         child: Text(
           text,

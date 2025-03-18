@@ -1,3 +1,15 @@
+buildscript {
+    ext.kotlin_version = "1.5.31"
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -16,6 +28,6 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register<Delete>("clean") {
-    delete(rootProject.layout.buildDirectory)
+task clean(type: Delete) {
+    delete(rootProject.buildDir)
 }

@@ -520,7 +520,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_application_1/subject_page.dart';
+import 'all_subjects_page.dart';
+// import 'subject_page.dart';
+import 'subject_details_page.dart'; // Add this line
 
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
@@ -581,7 +583,7 @@ class _StudentHomeState extends State<StudentHome> {
       'chapters': 6,
     },
     {
-      'name': ' Python',
+      'name': 'Python',
       'icon': Icons.computer,
       'color': const Color(0xFF9B59B6),
       'games': 15,
@@ -1035,6 +1037,14 @@ class _StudentHomeState extends State<StudentHome> {
                         TextButton(
                           onPressed: () {
                             // Navigate to all subjects screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        AllSubjectsPage(subjects: _subjects),
+                              ),
+                            );
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: const Color(0xFF5A6BF5),
@@ -1074,12 +1084,21 @@ class _StudentHomeState extends State<StudentHome> {
                                 child: GestureDetector(
                                   onTap: () {
                                     // Navigate to subject page
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder:
+                                    //         (context) =>
+                                    //             SubjectPage(subject: subject),
+                                    //   ),
+                                    // );
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder:
-                                            (context) =>
-                                                SubjectPage(subject: subject),
+                                            (context) => SubjectDetailsPage(
+                                              subject: subject,
+                                            ),
                                       ),
                                     );
                                   },
