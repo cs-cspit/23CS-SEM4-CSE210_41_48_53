@@ -1,16 +1,12 @@
-# flutter_application_1
+# The Edu Venture
 
-A new Flutter project.
+The Edu Venture is a Flutter application designed to provide an educational platform for students and faculty. The app includes features such as user authentication, profile management, and interactive learning materials.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- User Authentication (Login and Register)
+- Student and Faculty Profiles
+- Interactive Learning Materials
+- Fun base activities
+- Chatbot Integration (Coming Soon)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
