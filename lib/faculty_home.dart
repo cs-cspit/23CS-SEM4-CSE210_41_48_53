@@ -869,7 +869,7 @@ class _FacultyHomeState extends State<FacultyHome> {
           slivers: [
             // App Bar
             SliverAppBar(
-              expandedHeight: 120.0,
+              expandedHeight: 135.0,
               floating: true,
               pinned: true,
               backgroundColor: Colors.white,
@@ -1031,7 +1031,7 @@ class _FacultyHomeState extends State<FacultyHome> {
                       children: [
                         CarouselSlider(
                           options: CarouselOptions(
-                            height: 200.0,
+                            height: 230.0,
                             enlargeCenterPage: true,
                             autoPlay: true,
                             aspectRatio: 16 / 9,
@@ -1131,12 +1131,12 @@ class _FacultyHomeState extends State<FacultyHome> {
                                               ),
                                               // Game info
                                               Positioned(
-                                                bottom: 0,
+                                                bottom: 16,
                                                 left: 0,
                                                 right: 0,
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
-                                                    16.0,
+                                                    10.0,
                                                   ),
                                                   child: Column(
                                                     crossAxisAlignment:
@@ -1156,24 +1156,26 @@ class _FacultyHomeState extends State<FacultyHome> {
                                                             ),
                                                       ),
                                                       const SizedBox(
-                                                        height: 4.0,
+                                                        height: 14.0,
                                                       ),
                                                       Text(
                                                         game['description'],
-                                                        style: GoogleFonts.poppins(
-                                                          fontSize: 13,
-                                                          color: Colors.white
-                                                              .withAlpha(
-                                                                230,
-                                                              ), // 0.9 * 255 = 230
-                                                        ),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                              fontSize: 13,
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                    0.9,
+                                                                  ),
+                                                            ),
                                                         maxLines: 2,
                                                         overflow:
                                                             TextOverflow
                                                                 .ellipsis,
                                                       ),
                                                       const SizedBox(
-                                                        height: 8.0,
+                                                        height: 10.0,
                                                       ),
                                                       Row(
                                                         children: [
@@ -1183,7 +1185,7 @@ class _FacultyHomeState extends State<FacultyHome> {
                                                             size: 16,
                                                           ),
                                                           const SizedBox(
-                                                            width: 4.0,
+                                                            width: 6.0,
                                                           ),
                                                           Text(
                                                             '${game['participants']} participants',
@@ -1209,9 +1211,9 @@ class _FacultyHomeState extends State<FacultyHome> {
                                                             decoration: BoxDecoration(
                                                               color: Colors
                                                                   .white
-                                                                  .withAlpha(
-                                                                    64,
-                                                                  ), // 0.25 * 255 = 64
+                                                                  .withOpacity(
+                                                                    0.25,
+                                                                  ),
                                                               borderRadius:
                                                                   BorderRadius.circular(
                                                                     20,
@@ -1316,7 +1318,7 @@ class _FacultyHomeState extends State<FacultyHome> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
+                              crossAxisCount: 1,
                               crossAxisSpacing: 16.0,
                               mainAxisSpacing: 16.0,
                               childAspectRatio: 1.4,
@@ -1378,14 +1380,14 @@ class _FacultyHomeState extends State<FacultyHome> {
                                             child: Icon(
                                               subject['icon'],
                                               color: subject['color'],
-                                              size: 24,
+                                              size: 32,
                                             ),
                                           ),
                                           const SizedBox(height: 12.0),
                                           Text(
                                             subject['name'],
                                             style: GoogleFonts.poppins(
-                                              fontSize: 15,
+                                              fontSize: 25,
                                               fontWeight: FontWeight.w600,
                                               color: const Color(0xFF2D3748),
                                             ),

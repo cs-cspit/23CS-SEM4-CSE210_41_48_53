@@ -492,15 +492,15 @@ class SubjectDetailsPage extends StatelessWidget {
                                       color: const Color(0xFF718096),
                                     ),
                                   ),
-                                  const Spacer(),
-                                  Text(
-                                    '${chapter['completion'].toInt()}% Complete',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: subjectColor,
-                                    ),
-                                  ),
+                                  // const Spacer(),
+                                  // Text(
+                                  //   '${chapter['completion'].toInt()}% Complete',
+                                  //   style: GoogleFonts.poppins(
+                                  //     fontSize: 12,
+                                  //     fontWeight: FontWeight.w500,
+                                  //     color: subjectColor,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],

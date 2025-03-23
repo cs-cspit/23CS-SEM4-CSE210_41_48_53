@@ -131,7 +131,7 @@ class AllSubjectsPage extends StatelessWidget {
         slivers: [
           // Custom App Bar
           SliverAppBar(
-            expandedHeight: 120.0,
+            expandedHeight: 135.0,
             floating: true,
             pinned: true,
             backgroundColor: const Color(0xFF5A6BF5),
@@ -175,7 +175,7 @@ class AllSubjectsPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 1,
                 crossAxisSpacing: 16.0,
                 mainAxisSpacing: 16.0,
                 childAspectRatio: 1.4,
@@ -222,14 +222,14 @@ class AllSubjectsPage extends StatelessWidget {
                             child: Icon(
                               subject['icon'],
                               color: subject['color'],
-                              size: 24,
+                              size: 32,
                             ),
                           ),
                           const SizedBox(height: 12.0),
                           Text(
                             subject['name'],
                             style: GoogleFonts.poppins(
-                              fontSize: 15,
+                              fontSize: 25,
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF2D3748),
                             ),
