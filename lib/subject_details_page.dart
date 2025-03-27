@@ -366,8 +366,27 @@ class SubjectDetailsPage extends StatelessWidget {
                   child: FadeTransition(
                     opacity: animation,
                     child: GestureDetector(
+                      // onTap: () {
+                      //   // Navigate to chapter details
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder:
+                      //           (context) => ChapterPage(
+                      //             subject: subject,
+                      //             chapter: chapter,
+                      //           ),
+                      //     ),
+                      //   );
+                      // },
                       onTap: () {
-                        // Navigate to chapter details
+                        // // Example email check for faculty
+                        // final String userEmail =
+                        //     subject['userEmail'] ??
+                        //     ''; // Replace with actual user email
+                        // final bool isFaculty = userEmail.endsWith('.ac.in');
+
+                        // Navigate to the appropriate page
                         Navigator.push(
                           context,
                           MaterialPageRoute(

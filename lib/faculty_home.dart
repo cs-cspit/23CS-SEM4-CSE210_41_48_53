@@ -769,8 +769,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_application_1/subject_details_page.dart';
-import 'package:flutter_application_1/all_subjects_page.dart';
+import 'package:the_eduventure/subject_details_page.dart';
+import 'package:the_eduventure/all_subjects_page.dart';
 
 class FacultyHome extends StatefulWidget {
   const FacultyHome({super.key});

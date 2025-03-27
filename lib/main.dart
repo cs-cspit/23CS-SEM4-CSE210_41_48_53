@@ -49,13 +49,13 @@
 //   runApp(const MyApp());
 // }
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/splash.dart';
-import 'package:flutter_application_1/student_profile.dart';
-import 'package:flutter_application_1/faculty_profile.dart';
-import 'package:flutter_application_1/register.dart';
-import 'package:flutter_application_1/login.dart';
-import 'package:flutter_application_1/faculty_home.dart';
-import 'package:flutter_application_1/student_home.dart';
+import 'package:the_eduventure/splash.dart';
+import 'package:the_eduventure/student_profile.dart';
+import 'package:the_eduventure/faculty_profile.dart';
+import 'package:the_eduventure/register.dart';
+import 'package:the_eduventure/login.dart';
+import 'package:the_eduventure/faculty_home.dart';
+import 'package:the_eduventure/student_home.dart';
 
 void main() {
   runApp(const MyApp());

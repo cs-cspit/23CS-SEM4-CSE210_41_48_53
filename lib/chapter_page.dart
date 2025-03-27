@@ -465,6 +465,7 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -611,8 +612,8 @@ class _ChapterPageState extends State<ChapterPage>
             fontSize: 14,
           ),
           tabs: const [
-            Tab(icon: Icon(Icons.book), text: 'Learning Materials'),
-            Tab(icon: Icon(Icons.videogame_asset), text: 'Games'),
+            Tab(icon: Icon(Icons.book), text: 'Learning Material'),
+            Tab(icon: Icon(Icons.videogame_asset), text: 'Activities'),
           ],
         ),
       ),
