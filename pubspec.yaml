@@ -96,6 +96,10 @@ flutter:
     - assets/login.png
     - assets/register.png
     - assets/google_logo.png
+    - assets/N-queen.png
+    - assets/OS-Arena.png
+    - assets/TOH.png
+    - assets/Treasure_hunt.png
   uses-material-design: true
 
   # The following line ensures that the Material Icons font is
