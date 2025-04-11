@@ -48,6 +48,8 @@
 //   await Firebase.initializeApp();
 //   runApp(const MyApp());
 // }
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:the_eduventure/splash.dart';
 import 'package:the_eduventure/student_profile.dart';
@@ -57,7 +59,12 @@ import 'package:the_eduventure/login.dart';
 import 'package:the_eduventure/faculty_home.dart';
 import 'package:the_eduventure/student_home.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if(kIsWeb){
+    await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyAlTk1l6IP48PUCKJR_k6emF3F-cp04yGk", appId: "1:500279382603:web:8c5f8d26daf727fed8b3ce", messagingSenderId: "500279382603", projectId: "eduventure2-8109b"));
+  }
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
