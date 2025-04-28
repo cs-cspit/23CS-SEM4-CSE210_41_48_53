@@ -1,178 +1,4 @@
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'chapter_page.dart';
 
-// class SubjectDetailsPage extends StatelessWidget {
-//   final Map<String, dynamic> subject;
-
-//   const SubjectDetailsPage({super.key, required this.subject});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final List<Map<String, dynamic>> chapters = _generateChapters();
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(subject['name']),
-//         backgroundColor: subject['color'],
-//       ),
-//       body: ListView.builder(
-//         padding: const EdgeInsets.all(16.0),
-//         itemCount: chapters.length,
-//         itemBuilder: (context, index) {
-//           final chapter = chapters[index];
-//           return GestureDetector(
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder:
-//                       (context) =>
-//                           ChapterPage(subject: subject, chapter: chapter),
-//                 ),
-//               );
-//             },
-//             child: Container(
-//               margin: const EdgeInsets.only(bottom: 12),
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(16),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.grey.withOpacity(0.1),
-//                     spreadRadius: 0,
-//                     blurRadius: 10,
-//                     offset: const Offset(0, 2),
-//                   ),
-//                 ],
-//               ),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16.0),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       chapter['title'],
-//                       style: GoogleFonts.poppins(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.w600,
-//                         color: const Color(0xFF2D3748),
-//                       ),
-//                     ),
-//                     const SizedBox(height: 4.0),
-//                     Text(
-//                       chapter['subtitle'],
-//                       style: GoogleFonts.poppins(
-//                         fontSize: 13,
-//                         color: const Color(0xFF718096),
-//                       ),
-//                     ),
-//                     const SizedBox(height: 12.0),
-//                     Row(
-//                       children: [
-//                         Text(
-//                           '${chapter['materials']} materials',
-//                           style: GoogleFonts.poppins(
-//                             fontSize: 12,
-//                             color: const Color(0xFF718096),
-//                           ),
-//                         ),
-//                         const SizedBox(width: 8),
-//                         Container(
-//                           width: 4,
-//                           height: 4,
-//                           decoration: const BoxDecoration(
-//                             shape: BoxShape.circle,
-//                             color: Color(0xFF718096),
-//                           ),
-//                         ),
-//                         const SizedBox(width: 8),
-//                         Text(
-//                           '${chapter['games']} games',
-//                           style: GoogleFonts.poppins(
-//                             fontSize: 12,
-//                             color: const Color(0xFF718096),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-
-//   List<Map<String, dynamic>> _generateChapters() {
-//     final int chapterCount = subject['chapters'];
-//     final List<Map<String, dynamic>> chapters = [];
-
-//     for (int i = 1; i <= chapterCount; i++) {
-//       chapters.add({
-//         'id': i,
-//         'title': 'Chapter $i',
-//         'subtitle': _getChapterSubtitle(subject['name'], i),
-//         'materials': 3 + (i % 3),
-//         'games': 2 + (i % 4),
-//       });
-//     }
-
-//     return chapters;
-//   }
-
-//   String _getChapterSubtitle(String subject, int chapterNum) {
-//     final Map<String, List<String>> subjectChapters = {
-//       'Computer Science': [
-//         'Introduction to Programming',
-//         'Data Structures',
-//         'Algorithms',
-//         'Object-Oriented Programming',
-//         'Web Development',
-//         'Database Systems',
-//         'Computer Networks',
-//         'Artificial Intelligence',
-//         'Operating Systems',
-//         'Software Engineering',
-//       ],
-//       'Chemistry': [
-//         'Atomic Structure',
-//         'Periodic Table',
-//         'Chemical Bonding',
-//         'States of Matter',
-//         'Chemical Reactions',
-//         'Organic Chemistry',
-//         'Biochemistry',
-//       ],
-//       'Literature': [
-//         'Poetry Analysis',
-//         'Fiction Techniques',
-//         'Drama and Plays',
-//         'Literary Criticism',
-//         'World Literature',
-//       ],
-//       'History': [
-//         'Ancient Civilizations',
-//         'Medieval Period',
-//         'Renaissance',
-//         'Industrial Revolution',
-//         'World Wars',
-//         'Cold War Era',
-//         'Modern History',
-//         'Regional Studies',
-//       ],
-//     };
-
-//     final List<String> chapters = subjectChapters[subject] ?? [];
-//     if (chapterNum <= chapters.length) {
-//       return chapters[chapterNum - 1];
-//     }
-
-//     return 'Advanced Topics';
-//   }
-// }
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -291,22 +117,22 @@ class SubjectDetailsPage extends StatelessWidget {
                     context: context,
                     builder:
                         (context) => AlertDialog(
-                          title: Text(
-                            subject['name'] as String,
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          content: Text(
-                            'This subject contains ${subject['chapters']} chapters with study materials and interactive games to help you master the content.',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('OK'),
-                            ),
-                          ],
+                      title: Text(
+                        subject['name'] as String,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      content: Text(
+                        'This subject contains ${subject['chapters']} chapters with study materials and interactive games to help you master the content.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -392,9 +218,9 @@ class SubjectDetailsPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder:
                                 (context) => ChapterPage(
-                                  subject: subject,
-                                  chapter: chapter,
-                                ),
+                              subject: subject,
+                              chapter: chapter,
+                            ),
                           ),
                         );
                       },
@@ -444,7 +270,7 @@ class SubjectDetailsPage extends StatelessWidget {
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           chapter['title'] as String,
@@ -611,10 +437,10 @@ class PatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint =
-        Paint()
-          ..color = Colors.white.withAlpha(51) // 0.2 * 255 = 51
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.0;
+    Paint()
+      ..color = Colors.white.withAlpha(51) // 0.2 * 255 = 51
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
 
     final double spacing = 20.0;
 
@@ -629,9 +455,9 @@ class PatternPainter extends CustomPainter {
 
     // Draw random circles
     final circlePaint =
-        Paint()
-          ..color = Colors.white.withAlpha(38) // 0.15 * 255 = 38
-          ..style = PaintingStyle.fill;
+    Paint()
+      ..color = Colors.white.withAlpha(38) // 0.15 * 255 = 38
+      ..style = PaintingStyle.fill;
 
     final random = DateTime.now().millisecondsSinceEpoch;
     for (int i = 0; i < 10; i++) {

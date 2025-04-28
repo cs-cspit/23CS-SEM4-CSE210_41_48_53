@@ -1,938 +1,425 @@
-// // lib/pages/chapter_page.dart
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
-// class ChapterPage extends StatefulWidget {
-//   final Map<String, dynamic> subject;
-//   final Map<String, dynamic> chapter;
-
-//   const ChapterPage({super.key, required this.subject, required this.chapter});
-
-//   @override
-//   State<ChapterPage> createState() => _ChapterPageState();
-// }
-
-// class _ChapterPageState extends State<ChapterPage>
-//     with SingleTickerProviderStateMixin {
-//   late TabController _tabController;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _tabController = TabController(length: 2, vsync: this);
-//   }
-
-//   @override
-//   void dispose() {
-//     _tabController.dispose();
-//     super.dispose();
-//   }
-
-//   // Generate dummy learning materials
-//   List<Map<String, dynamic>> _generateMaterials() {
-//     final int materialCount = widget.chapter['materials'] as int;
-//     final List<Map<String, dynamic>> materials = [];
-
-//     final List<String> materialTypes = [
-//       'PDF Document',
-//       'Video Lesson',
-//       'Interactive Tutorial',
-//       'Presentation',
-//       'Audio Lecture',
-//       'Article',
-//     ];
-
-//     final List<IconData> materialIcons = [
-//       Icons.picture_as_pdf,
-//       Icons.video_library,
-//       Icons.touch_app,
-//       Icons.slideshow,
-//       Icons.headphones,
-//       Icons.article,
-//     ];
-
-//     for (int i = 1; i <= materialCount; i++) {
-//       final typeIndex = (i - 1) % materialTypes.length;
-//       materials.add({
-//         'id': i,
-//         'title': '${widget.chapter['subtitle']} - ${materialTypes[typeIndex]}',
-//         'type': materialTypes[typeIndex],
-//         'icon': materialIcons[typeIndex],
-//         'duration': '${(i * 5) + 10} min',
-//         'isCompleted': i <= (materialCount / 2).ceil(),
-//       });
-//     }
-
-//     return materials;
-//   }
-
-//   // Generate dummy games
-//   List<Map<String, dynamic>> _generateGames() {
-//     final int gameCount = widget.chapter['games'] as int;
-//     final List<Map<String, dynamic>> games = [];
-
-//     final List<String> gameTypes = [
-//       'Quiz Challenge',
-//       'Matching Game',
-//       'Puzzle',
-//       'Flashcards',
-//       'Word Game',
-//       'Simulation',
-//     ];
-
-//     final List<IconData> gameIcons = [
-//       Icons.quiz,
-//       Icons.schema,
-//       Icons.extension,
-//       Icons.flip,
-//       Icons.spellcheck,
-//       Icons.science,
-//     ];
-
-//     for (int i = 1; i <= gameCount; i++) {
-//       final typeIndex = (i - 1) % gameTypes.length;
-//       games.add({
-//         'id': i,
-//         'title': '${widget.chapter['subtitle']} ${gameTypes[typeIndex]}',
-//         'type': gameTypes[typeIndex],
-//         'icon': gameIcons[typeIndex],
-//         'players': (i * 15) + 10,
-//         'difficulty': ['Easy', 'Medium', 'Hard'][i % 3],
-//         'bestScore': i % 2 == 0 ? '${70 + (i * 3)}%' : null,
-//       });
-//     }
-
-//     return games;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final Color subjectColor = widget.subject['color'] as Color;
-//     final materials = _generateMaterials();
-//     final games = _generateGames();
-
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFF5F7FA),
-//       appBar: AppBar(
-//         backgroundColor: subjectColor,
-//         foregroundColor: Colors.white,
-//         title: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               widget.chapter['title'] as String,
-//               style: GoogleFonts.poppins(
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 18,
-//               ),
-//             ),
-//             Text(
-//               widget.chapter['subtitle'] as String,
-//               style: GoogleFonts.poppins(
-//                 fontSize: 12,
-//                 fontWeight: FontWeight.w500,
-//               ),
-//             ),
-//           ],
-//         ),
-//         bottom: TabBar(
-//           controller: _tabController,
-//           indicatorColor: Colors.white,
-//           indicatorWeight: 3,
-//           labelStyle: GoogleFonts.poppins(
-//             fontWeight: FontWeight.w600,
-//             fontSize: 14,
-//           ),
-//           tabs: const [
-//             Tab(icon: Icon(Icons.book), text: 'Learning Materials'),
-//             Tab(icon: Icon(Icons.videogame_asset), text: 'Games'),
-//           ],
-//         ),
-//       ),
-//       body: TabBarView(
-//         controller: _tabController,
-//         children: [
-//           // Learning Materials Tab
-//           AnimationLimiter(
-//             child: ListView.builder(
-//               padding: const EdgeInsets.all(16),
-//               itemCount: materials.length,
-//               itemBuilder: (context, index) {
-//                 final material = materials[index];
-//                 return AnimationConfiguration.staggeredList(
-//                   position: index,
-//                   duration: const Duration(milliseconds: 375),
-//                   child: SlideAnimation(
-//                     verticalOffset: 50.0,
-//                     child: FadeInAnimation(
-//                       child: _buildMaterialCard(material, subjectColor),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-
-//           // Games Tab
-//           AnimationLimiter(
-//             child: ListView.builder(
-//               padding: const EdgeInsets.all(16),
-//               itemCount: games.length,
-//               itemBuilder: (context, index) {
-//                 final game = games[index];
-//                 return AnimationConfiguration.staggeredList(
-//                   position: index,
-//                   duration: const Duration(milliseconds: 375),
-//                   child: SlideAnimation(
-//                     verticalOffset: 50.0,
-//                     child: FadeInAnimation(
-//                       child: _buildGameCard(game, subjectColor),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//       // Floating Action Button to continue learning
-//       floatingActionButton: FloatingActionButton.extended(
-//         onPressed: () {
-//           // Action for continuing from last position
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(
-//               content: Text(
-//                 'Continuing from where you left off',
-//                 style: GoogleFonts.poppins(),
-//               ),
-//               backgroundColor: subjectColor,
-//               behavior: SnackBarBehavior.floating,
-//             ),
-//           );
-//         },
-//         icon: const Icon(Icons.play_arrow),
-//         label: Text(
-//           'Continue Learning',
-//           style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-//         ),
-//         backgroundColor: subjectColor,
-//       ),
-//     );
-//   }
-
-//   Widget _buildMaterialCard(Map<String, dynamic> material, Color color) {
-//     return Card(
-//       elevation: 0,
-//       margin: const EdgeInsets.only(bottom: 12),
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(16),
-//         side: BorderSide(
-//           color:
-//               material['isCompleted']
-//                   ? color.withOpacity(0.3)
-//                   : Colors.transparent,
-//           width: 1,
-//         ),
-//       ),
-//       child: ListTile(
-//         contentPadding: const EdgeInsets.symmetric(
-//           horizontal: 16,
-//           vertical: 12,
-//         ),
-//         leading: Container(
-//           padding: const EdgeInsets.all(10),
-//           decoration: BoxDecoration(
-//             color: color.withOpacity(0.1),
-//             borderRadius: BorderRadius.circular(12),
-//           ),
-//           child: Icon(material['icon'] as IconData, color: color),
-//         ),
-//         title: Text(
-//           material['title'] as String,
-//           style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14),
-//         ),
-//         subtitle: Padding(
-//           padding: const EdgeInsets.only(top: 4),
-//           child: Row(
-//             children: [
-//               Icon(Icons.access_time, size: 14, color: const Color(0xFF718096)),
-//               const SizedBox(width: 4),
-//               Text(
-//                 material['duration'] as String,
-//                 style: GoogleFonts.poppins(
-//                   fontSize: 12,
-//                   color: const Color(0xFF718096),
-//                 ),
-//               ),
-//               const SizedBox(width: 16),
-//               if (material['isCompleted'])
-//                 Row(
-//                   children: [
-//                     Icon(Icons.check_circle, size: 14, color: color),
-//                     const SizedBox(width: 4),
-//                     Text(
-//                       'Completed',
-//                       style: GoogleFonts.poppins(
-//                         fontSize: 12,
-//                         color: color,
-//                         fontWeight: FontWeight.w500,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//             ],
-//           ),
-//         ),
-//         trailing: IconButton(
-//           icon: Icon(
-//             material['isCompleted'] ? Icons.refresh : Icons.play_circle_outline,
-//             color: color,
-//           ),
-//           onPressed: () {
-//             // Open or restart the material
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(
-//                 content: Text(
-//                   material['isCompleted']
-//                       ? 'Reviewing ${material['title']}'
-//                       : 'Starting ${material['title']}',
-//                   style: GoogleFonts.poppins(),
-//                 ),
-//                 behavior: SnackBarBehavior.floating,
-//               ),
-//             );
-//           },
-//         ),
-//         onTap: () {
-//           // Open the material
-//         },
-//       ),
-//     );
-//   }
-
-//   Widget _buildGameCard(Map<String, dynamic> game, Color color) {
-//     return GestureDetector(
-//       onTap: () {
-//         // Start the game
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(
-//             content: Text(
-//               'Starting ${game['title']}',
-//               style: GoogleFonts.poppins(),
-//             ),
-//             behavior: SnackBarBehavior.floating,
-//           ),
-//         );
-//       },
-//       child: Container(
-//         margin: const EdgeInsets.only(bottom: 12),
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             colors: [color.withOpacity(0.8), color.withOpacity(0.6)],
-//             begin: Alignment.topLeft,
-//             end: Alignment.bottomRight,
-//           ),
-//           borderRadius: BorderRadius.circular(16),
-//           boxShadow: [
-//             BoxShadow(
-//               color: color.withOpacity(0.2),
-//               blurRadius: 8,
-//               offset: const Offset(0, 4),
-//             ),
-//           ],
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: Row(
-//             children: [
-//               // Game icon
-//               Container(
-//                 padding: const EdgeInsets.all(12),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white.withOpacity(0.2),
-//                   borderRadius: BorderRadius.circular(12),
-//                 ),
-//                 child: Icon(
-//                   game['icon'] as IconData,
-//                   color: Colors.white,
-//                   size: 28,
-//                 ),
-//               ),
-//               const SizedBox(width: 16),
-//               // Game details
-//               Expanded(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       game['title'] as String,
-//                       style: GoogleFonts.poppins(
-//                         fontWeight: FontWeight.w600,
-//                         fontSize: 15,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                     const SizedBox(height: 4),
-//                     // Stats row
-//                     Row(
-//                       children: [
-//                         Icon(
-//                           Icons.people,
-//                           size: 14,
-//                           color: Colors.white.withOpacity(0.9),
-//                         ),
-//                         const SizedBox(width: 4),
-//                         Text(
-//                           '${game['players']} players',
-//                           style: GoogleFonts.poppins(
-//                             fontSize: 12,
-//                             color: Colors.white.withOpacity(0.9),
-//                           ),
-//                         ),
-//                         const SizedBox(width: 16),
-//                         Container(
-//                           padding: const EdgeInsets.symmetric(
-//                             horizontal: 8,
-//                             vertical: 2,
-//                           ),
-//                           decoration: BoxDecoration(
-//                             color: Colors.white.withOpacity(0.2),
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           child: Text(
-//                             game['difficulty'] as String,
-//                             style: GoogleFonts.poppins(
-//                               fontSize: 10,
-//                               fontWeight: FontWeight.w500,
-//                               color: Colors.white,
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-
-//                     // Best score if available
-//                     if (game['bestScore'] != null) ...[
-//                       const SizedBox(height: 8),
-//                       Container(
-//                         padding: const EdgeInsets.symmetric(
-//                           horizontal: 8,
-//                           vertical: 4,
-//                         ),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white.withOpacity(0.3),
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Row(
-//                           mainAxisSize: MainAxisSize.min,
-//                           children: [
-//                             const Icon(
-//                               Icons.emoji_events,
-//                               size: 14,
-//                               color: Colors.white,
-//                             ),
-//                             const SizedBox(width: 4),
-//                             Text(
-//                               'Best: ${game['bestScore']}',
-//                               style: GoogleFonts.poppins(
-//                                 fontSize: 12,
-//                                 fontWeight: FontWeight.w500,
-//                                 color: Colors.white,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ],
-//                   ],
-//                 ),
-//               ),
-//               // Play button
-//               Container(
-//                 padding: const EdgeInsets.all(8),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(12),
-//                 ),
-//                 child: Icon(Icons.play_arrow, color: color, size: 28),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'pages/pdf_viewer_page.dart';
+import 'package:http/http.dart' as http;
 
 class ChapterPage extends StatefulWidget {
   final Map<String, dynamic> subject;
   final Map<String, dynamic> chapter;
 
-  const ChapterPage({super.key, required this.subject, required this.chapter});
+  const ChapterPage({Key? key, required this.subject, required this.chapter}) : super(key: key);
 
   @override
   State<ChapterPage> createState() => _ChapterPageState();
 }
 
-class _ChapterPageState extends State<ChapterPage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _ChapterPageState extends State<ChapterPage> {
+  late Future<List<String>> _materialsFuture;
+  late Future<List<Map<String, dynamic>>> _gamesFuture;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _materialsFuture = _fetchMaterials();
+    _gamesFuture = _fetchGames();
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  Future<List<String>> _fetchMaterials() async {
+    try {
+      final formattedSubject = widget.subject['name'].toString().toUpperCase();
+      final ref = FirebaseStorage.instance.ref('materials/$formattedSubject');
+      final result = await ref.listAll();
 
-  // Generate dummy learning materials
-  List<Map<String, dynamic>> _generateMaterials() {
-    final int materialCount = widget.chapter['materials'] as int;
-    final List<Map<String, dynamic>> materials = [];
+      final chapterId = widget.chapter['id'].toString();
+      final List<String> fileNames = result.items
+          .map((item) => item.name)
+          .where((name) => name.toLowerCase().contains('chapter$chapterId') ||
+                           name.toLowerCase().contains('unit$chapterId'))
+          .toList();
 
-    final List<String> materialTypes = [
-      'PDF Document',
-      'Video Lesson',
-      'Interactive Tutorial',
-      'Presentation',
-      'Audio Lecture',
-      'Article',
-    ];
-
-    final List<IconData> materialIcons = [
-      Icons.picture_as_pdf,
-      Icons.video_library,
-      Icons.touch_app,
-      Icons.slideshow,
-      Icons.headphones,
-      Icons.article,
-    ];
-
-    for (int i = 1; i <= materialCount; i++) {
-      final typeIndex = (i - 1) % materialTypes.length;
-      materials.add({
-        'id': i,
-        'title': '${widget.chapter['subtitle']} - ${materialTypes[typeIndex]}',
-        'type': materialTypes[typeIndex],
-        'icon': materialIcons[typeIndex],
-        'duration': '${(i * 5) + 10} min',
-        'isCompleted': i <= (materialCount / 2).ceil(),
-      });
+      return fileNames;
+    } catch (e) {
+      print('Error fetching materials: $e');
+      return [];
     }
-
-    return materials;
   }
 
-  // Generate dummy games
-  List<Map<String, dynamic>> _generateGames() {
-    final int gameCount = widget.chapter['games'] as int;
-    final List<Map<String, dynamic>> games = [];
-
-    final List<String> gameTypes = [
-      'Quiz Challenge',
-      'Matching Game',
-      'Puzzle',
-      'Flashcards',
-      'Word Game',
-      'Simulation',
-    ];
-
-    final List<IconData> gameIcons = [
-      Icons.quiz,
-      Icons.schema,
-      Icons.extension,
-      Icons.flip,
-      Icons.spellcheck,
-      Icons.science,
-    ];
-
-    for (int i = 1; i <= gameCount; i++) {
-      final typeIndex = (i - 1) % gameTypes.length;
-      games.add({
-        'id': i,
-        'title': '${widget.chapter['subtitle']} ${gameTypes[typeIndex]}',
-        'type': gameTypes[typeIndex],
-        'icon': gameIcons[typeIndex],
-        'players': (i * 15) + 10,
-        'difficulty': ['Easy', 'Medium', 'Hard'][i % 3],
-        'bestScore': i % 2 == 0 ? '${70 + (i * 3)}%' : null,
-      });
+  Future<String?> _getDownloadUrl(String fileName) async {
+    try {
+      final formattedSubject = widget.subject['name'].toString().toUpperCase();
+      final ref = FirebaseStorage.instance.ref('materials/$formattedSubject/$fileName');
+      return await ref.getDownloadURL();
+    } catch (e) {
+      print('Error getting download URL for $fileName: $e');
+      return null;
     }
+  }
 
-    return games;
+  Future<List<Map<String, dynamic>>> _fetchGames() async {
+    try {
+      final formattedSubject = widget.subject['name'].toString().toUpperCase();
+      final chapterId = widget.chapter['id'].toString();
+      final path = 'materials/$formattedSubject/game$chapterId.txt';
+      
+      print('Fetching game from path: $path');
+      
+      final ref = FirebaseStorage.instance.ref(path);
+      final url = await ref.getDownloadURL();
+      
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final content = response.body.trim();
+        if (content.isEmpty) return [];
+
+        final lines = content.split('\n');
+        if (lines.isEmpty) return [];
+
+        final title = lines.first.trim();
+        final body = lines.skip(1).join('\n').trim();
+
+        return [
+          {
+            'title': title,
+            'description': body,
+          }
+        ];
+      } else {
+        print('Failed to load game. Status: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching game: $e');
+      return [];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color subjectColor = widget.subject['color'] as Color;
-    final materials = _generateMaterials();
-    final games = _generateGames();
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
-        backgroundColor: subjectColor,
+        title: Text('${widget.subject['name']} - ${widget.chapter['title']}'),
+        backgroundColor: const Color(0xFF5A6BF5),
         foregroundColor: Colors.white,
-        title: Column(
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.chapter['title'] as String,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            Text(
-              widget.chapter['subtitle'] as String,
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.white,
-          indicatorWeight: 3,
-          labelStyle: GoogleFonts.poppins(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-          ),
-          tabs: const [
-            Tab(icon: Icon(Icons.book), text: 'Learning Material'),
-            Tab(icon: Icon(Icons.videogame_asset), text: 'Activities'),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // Learning Materials Tab
-          AnimationLimiter(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: materials.length,
-              itemBuilder: (context, index) {
-                final material = materials[index];
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: _buildMaterialCard(material, subjectColor),
-                    ),
+            // Materials Section with Card Container
+            Container(
+              margin: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
                   ),
-                );
-              },
-            ),
-          ),
-
-          // Games Tab
-          AnimationLimiter(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: games.length,
-              itemBuilder: (context, index) {
-                final game = games[index];
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: _buildGameCard(game, subjectColor),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      // Floating Action Button to continue learning
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Action for continuing from last position
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Continuing from where you left off',
-                style: GoogleFonts.poppins(),
+                ],
               ),
-              backgroundColor: subjectColor,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        },
-        icon: const Icon(Icons.play_arrow),
-        label: Text(
-          'Continue Learning',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-        ),
-        backgroundColor: subjectColor,
-      ),
-    );
-  }
-
-  Widget _buildMaterialCard(Map<String, dynamic> material, Color color) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color:
-              material['isCompleted']
-                  ? color.withAlpha(77) // 0.3 * 255 = 77
-                  : Colors.transparent,
-          width: 1,
-        ),
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        leading: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: color.withAlpha(25), // 0.1 * 255 = 25
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(material['icon'] as IconData, color: color),
-        ),
-        title: Text(
-          material['title'] as String,
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 14),
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Row(
-            children: [
-              Icon(Icons.access_time, size: 14, color: const Color(0xFF718096)),
-              const SizedBox(width: 4),
-              Text(
-                material['duration'] as String,
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: const Color(0xFF718096),
-                ),
-              ),
-              const SizedBox(width: 16),
-              if (material['isCompleted'])
-                Row(
-                  children: [
-                    Icon(Icons.check_circle, size: 14, color: color),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Completed',
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: color,
-                        fontWeight: FontWeight.w500,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF5A6BF5),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
                       ),
                     ),
-                  ],
-                ),
-            ],
-          ),
-        ),
-        trailing: IconButton(
-          icon: Icon(
-            material['isCompleted'] ? Icons.refresh : Icons.play_circle_outline,
-            color: color,
-          ),
-          onPressed: () {
-            // Open or restart the material
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  material['isCompleted']
-                      ? 'Reviewing ${material['title']}'
-                      : 'Starting ${material['title']}',
-                  style: GoogleFonts.poppins(),
-                ),
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
-          },
-        ),
-        onTap: () {
-          // Open the material
-        },
-      ),
-    );
-  }
-
-  Widget _buildGameCard(Map<String, dynamic> game, Color color) {
-    return GestureDetector(
-      onTap: () {
-        // Start the game
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Starting ${game['title']}',
-              style: GoogleFonts.poppins(),
-            ),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              color.withAlpha(204),
-              color.withAlpha(153),
-            ], // 0.8 * 255 = 204, 0.6 * 255 = 153
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: color.withAlpha(51), // 0.2 * 255 = 51
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              // Game icon
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(51), // 0.2 * 255 = 51
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  game['icon'] as IconData,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
-              const SizedBox(width: 16),
-              // Game details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      game['title'] as String,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Stats row
-                    Row(
+                    child: Row(
                       children: [
-                        Icon(
-                          Icons.people,
-                          size: 14,
-                          color: Colors.white.withAlpha(230), // 0.9 * 255 = 230
+                        const Icon(
+                          Icons.book,
+                          color: Colors.white,
+                          size: 24,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 12),
                         Text(
-                          '${game['players']} players',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            color: Colors.white.withAlpha(
-                              230,
-                            ), // 0.9 * 255 = 230
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(51), // 0.2 * 255 = 51
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            game['difficulty'] as String,
-                            style: GoogleFonts.poppins(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                          'Study Materials',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ],
                     ),
-
-                    // Best score if available
-                    if (game['bestScore'] != null) ...[
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
+                  ),
+                  _buildMaterialsSection(),
+                ],
+              ),
+            ),
+            
+            // Games Section with Card Container
+            Container(
+              margin: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF5A623),  // Different color for games section
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.games,
+                          color: Colors.white,
+                          size: 24,
                         ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Games & Activities',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  _buildGamesSection(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMaterialsSection() {
+    return FutureBuilder<List<String>>(
+      future: _materialsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.0),
+              child: CircularProgressIndicator(color: Color(0xFF5A6BF5)),
+            ),
+          );
+        }
+        if (snapshot.hasError) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.0),
+              child: Text('Error loading materials.'),
+            ),
+          );
+        }
+        final materials = snapshot.data ?? [];
+        if (materials.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Icon(Icons.info_outline, size: 48, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No materials found for this chapter.',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: materials.length,
+          separatorBuilder: (context, index) => const Divider(height: 1),
+          itemBuilder: (context, index) {
+            final fileName = materials[index];
+            return Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () async {
+                  final url = await _getDownloadUrl(fileName);
+                  if (url != null && mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PDFViewerPage(url: url, title: fileName),
+                      ),
+                    );
+                  } else {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Failed to load PDF'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(77), // 0.3 * 255 = 77
+                          color: const Color(0xFF5A6BF5).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.emoji_events,
-                              size: 14,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Best: ${game['bestScore']}',
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+                        child: const Icon(
+                          Icons.picture_as_pdf,
+                          color: Color(0xFF5A6BF5),
+                          size: 24,
                         ),
                       ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          fileName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
                     ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildGamesSection() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: _gamesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.0),
+              child: CircularProgressIndicator(color: Color(0xFFF5A623)),
+            ),
+          );
+        }
+        if (snapshot.hasError) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.0),
+              child: Text('Error loading games.'),
+            ),
+          );
+        }
+        final games = snapshot.data ?? [];
+        if (games.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Icon(Icons.games_outlined, size: 48, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No games available for this chapter.',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: games.length,
+          itemBuilder: (context, index) {
+            final game = games[index];
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Material(
+                color: Colors.transparent,
+                child: ExpansionTile(
+                  tilePadding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                  ),
+                  collapsedShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                  ),
+                  leading: const CircleAvatar(
+                    backgroundColor: Color(0xFFF5A623),
+                    child: Icon(Icons.extension, color: Colors.white),
+                  ),
+                  title: Text(
+                    game['title'] ?? '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Tap to view activity details',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    ),
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          game['description'] ?? '',
+                          style: const TextStyle(fontSize: 16, height: 1.5),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              // Play button
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(Icons.play_arrow, color: color, size: 28),
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }

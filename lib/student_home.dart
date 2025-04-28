@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'all_subjects_page.dart';
 import 'subject_details_page.dart';
 
@@ -14,6 +16,34 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHomeState extends State<StudentHome> {
   int _currentCarouselIndex = 0;
+  String _userName = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserName();
+  }
+
+  Future<void> _fetchUserName() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        if (userDoc.exists) {
+          setState(() {
+            _userName = userDoc['name'] ?? 'User';
+          });
+        }
+      }
+    } catch (e) {
+      setState(() {
+        _userName = 'Error fetching name';
+      });
+    }
+  }
 
   // Dummy data for trending games
   final List<Map<String, dynamic>> _trendingGames = [
@@ -128,7 +158,7 @@ class _StudentHomeState extends State<StudentHome> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hello, Alex! 👋',
+                        'Hello, $_userName! 👋',
                         style: GoogleFonts.poppins(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -195,7 +225,7 @@ class _StudentHomeState extends State<StudentHome> {
                         radius: 18,
                         backgroundColor: Colors.grey[200],
                         backgroundImage: const AssetImage(
-                          'assets/profile_pic.jpg',
+                          'assets/Profile.png',
                         ),
                         onBackgroundImageError: (_, __) {},
                       ),

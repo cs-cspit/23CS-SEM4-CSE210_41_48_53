@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "869504266615",
+    "project_id": "eduve-bc350",
+    "storage_bucket": "eduve-bc350.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869504266615:android:26a05dd58a9c98edfb3172",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869504266615-19bmfolbt7kolc202joc7oshbv16tvg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "11ebfa888fed8598017c38e562f8801201fc575a"
+          }
+        },
+        {
+          "client_id": "869504266615-udrnmokv8eci62lovh3rv3ms1bn1oco4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUGSEPW7bwZiI1cDrjJu1JjNRo7Vm8qLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869504266615-udrnmokv8eci62lovh3rv3ms1bn1oco4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "869504266615-4gi2nuaeh83ei0vjltfres5t3r1ent7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplication1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
