@@ -1,0 +1,2 @@
+D:/eduventure/23CS-SEM4-CSE210_41_48_53/android/app/.cxx/Debug/i3p5q383/x86/CMakeFiles/edit_cache.dir
+D:/eduventure/23CS-SEM4-CSE210_41_48_53/android/app/.cxx/Debug/i3p5q383/x86/CMakeFiles/rebuild_cache.dir
